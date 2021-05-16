@@ -1,22 +1,24 @@
-package docxlib
+// Package xml contains the stuff to read and write the xml structures.
+// Office Open XML is basically a zip of xml files
+package xml
 
 import (
+	"archive/zip"
+	"errors"
 	"io"
-
-	"github.com/gonfva/docxlib/xml"
 )
 
-// DocxLib is the structure that allow to access the internal represntation
-// in memory of the doc (either read or about to be written)
-type DocxLib struct {
-	lib *xml.LibXML
+type LibXML struct {
+	Document    Document
+	DocRelation Relationships
+
+	rId int
 }
 
 // New generates a new empty docx file that we can manipulate and
 // later on, save
-func New() *DocxLib {
-	lib := xml.New()
-	return &DocxLib{lib: lib}
+func New() *LibXML {
+	return emptyFile()
 }
 
 // Parse generates a new docx file in memory from a reader
@@ -46,29 +48,31 @@ func New() *DocxLib {
 //		defer file.Close()
 //		docxlib.Parse(file, handler.Size)
 //	}
-func Parse(reader io.ReaderAt, size int64) (doc *DocxLib, err error) {
-	libxml, err := xml.Parse(reader, size)
-	doc = &DocxLib{lib: libxml}
+func Parse(reader io.ReaderAt, size int64) (doc *LibXML, err error) {
+	zipReader, err := zip.NewReader(reader, size)
+	if err != nil {
+		return nil, err
+	}
+	doc, err = unpack(zipReader)
 	return
 }
 
 // Write allows to save a docx to a writer
-func (f *DocxLib) Write(writer io.Writer) (err error) {
-	return f.lib.Write(writer)
+func (f *LibXML) Write(writer io.Writer) (err error) {
+	zipWriter := zip.NewWriter(writer)
+	defer zipWriter.Close()
+
+	return f.pack(zipWriter)
 }
 
-func (f *DocxLib) Paragraphs() []*Paragraph {
-	pars := make([]*Paragraph, 0)
-	for _, p := range f.lib.Document.Body.Paragraphs {
-		pars = append(pars, &Paragraph{pxml: p, lib: f.lib})
+// References gets the url for a reference
+func (f *LibXML) References(id string) (href string, err error) {
+	for _, a := range f.DocRelation.Relationships {
+		if a.ID == id {
+			href = a.Target
+			return
+		}
 	}
-
-	return pars
-}
-
-// AddParagraph adds a new paragraph
-func (f *DocxLib) AddParagraph() *Paragraph {
-	p := f.lib.AddParagraph()
-	para := &Paragraph{pxml: p, lib: f.lib}
-	return para
+	err = errors.New("id not found")
+	return
 }

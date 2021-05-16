@@ -1,7 +1,7 @@
-package docxlib
+package xml
 
 // AddParagraph adds a new paragraph
-func (f *DocxLib) AddParagraph() *Paragraph {
+func (f *LibXML) AddParagraph() *Paragraph {
 	p := &Paragraph{
 		Data: make([]ParagraphChild, 0),
 		file: f,
@@ -11,7 +11,7 @@ func (f *DocxLib) AddParagraph() *Paragraph {
 	return p
 }
 
-func (f *DocxLib) Paragraphs() []*Paragraph {
+func (f *LibXML) Paragraphs() []*Paragraph {
 	return f.Document.Body.Paragraphs
 }
 

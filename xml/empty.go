@@ -1,4 +1,4 @@
-package docxlib
+package xml
 
 import "encoding/xml"
 
@@ -23,8 +23,8 @@ func emptyRelationships() []*Relationship {
 	return defaultRel
 }
 
-func emptyFile() *DocxLib {
-	docx := &DocxLib{
+func emptyFile() *LibXML {
+	docx := &LibXML{
 		Document: Document{
 			XMLName: xml.Name{
 				Space: "w",

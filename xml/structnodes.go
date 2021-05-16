@@ -1,4 +1,4 @@
-package docxlib
+package xml
 
 import (
 	"encoding/xml"
@@ -17,7 +17,7 @@ type Paragraph struct {
 	XMLName xml.Name `xml:"http://schemas.openxmlformats.org/wordprocessingml/2006/main p"`
 	Data    []ParagraphChild
 
-	file *DocxLib
+	file *LibXML
 }
 
 func (p *Paragraph) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
