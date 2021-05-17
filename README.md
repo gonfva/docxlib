@@ -1,5 +1,7 @@
 # Docx library
 
+[![Go](https://github.com/gonfva/docxlib/actions/workflows/build.yml/badge.svg)](https://github.com/gonfva/docxlib/actions/workflows/build.yml) [![CodeQL](https://github.com/gonfva/docxlib/actions/workflows/codeql-analysis.yml/badge.svg?branch=master)](https://github.com/gonfva/docxlib/actions/workflows/codeql-analysis.yml)
+
 Yet another library to read and write .docx (a.k.a. Microsoft Word documents or ECMA-376 Office Open XML) files in Go.
 
 ## Introduction
