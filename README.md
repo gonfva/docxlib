@@ -55,7 +55,8 @@ You can also increase the log level (-logtostderr=true -v=0).
 
 And you can just dump a specific file(-file /tmp/new-file.docx -ro)
 ```
-$ go build -o docxlib ./main && ./docxlib -logtostderr=true -v=0 -file /tmp/new-file.docx -ro
+$ go build -o docxlib ./main
+$ ./docxlib -logtostderr=true -v=0 -file /tmp/new-file.docx -ro
 I0511 12:37:40.898493   18466 unpack.go:69] Relations: [...]
 I0511 12:37:40.898787   18466 unpack.go:47] Doc: [...]
 I0511 12:37:40.899330   18466 unpack.go:58] Paragraph [0xc000026d40 0xc000027d00 0xc000172340]
