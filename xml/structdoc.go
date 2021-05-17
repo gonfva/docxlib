@@ -1,4 +1,4 @@
-package docxlib
+package xml
 
 import "encoding/xml"
 

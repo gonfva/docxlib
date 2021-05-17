@@ -1,4 +1,4 @@
-package docxlib
+package xml
 
 // Color allows to set run color
 func (r *Run) Color(color string) *Run {

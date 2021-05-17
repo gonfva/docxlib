@@ -1,9 +1,9 @@
-package docxlib
+package xml
 
 import "strconv"
 
 // when adding an hyperlink we need to store a reference in the relationship field
-func (f *DocxLib) addLinkRelation(link string) string {
+func (f *LibXML) addLinkRelation(link string) string {
 	rel := &Relationship{
 		ID:         "rId" + strconv.Itoa(f.rId),
 		Type:       REL_HYPERLINK,
